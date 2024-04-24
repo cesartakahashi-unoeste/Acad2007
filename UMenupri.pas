@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   DBTables, Math, IniFiles, Printers, StdCtrls, Mask, DBCtrls,
   ExtCtrls, RXDBCtrl, rxMemTable, Variants, rxToolEdit, rxCurrEdit, RxMemDS,
-  ComObj, DB;
+  ComObj, DB, ValExecDB;
 
 type
   TMenuprin = class(TForm)
@@ -247,6 +247,7 @@ begin
      If (vcodusu <> 0) and (vbanco = 'P')
      Then
       Begin
+//        ConectarDB(DataBase1, vcodusu);
         Database1.Connected:=False;
         //Database1.AliasName:='unoeste';
         Database1.Params.Values['SERVER NAME']:='serv_prd';
