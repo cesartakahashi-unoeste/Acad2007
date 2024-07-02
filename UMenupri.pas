@@ -247,14 +247,14 @@ begin
      If (vcodusu <> 0) and (vbanco = 'P')
      Then
       Begin
-//        ConectarDB(DataBase1, vcodusu);
-        Database1.Connected:=False;
+        ConectarDB(DataBase1, vcodusu);
+        //Database1.Connected:=False;
         //Database1.AliasName:='unoeste';
-        Database1.Params.Values['SERVER NAME']:='serv_prd';
-        Database1.Params.Values['DATABASE NAME']:='unoeste';
-        Database1.Params.Values['USER NAME']:='u_'+StrZero(vcodusu,6);
-        Database1.Params.Values['PASSWORD']:=IntToStr(Trunc(vcodusu/7)*11);
-        Database1.Connected:=True;
+        //Database1.Params.Values['SERVER NAME']:='serv_prd';
+        //Database1.Params.Values['DATABASE NAME']:='unoeste';
+        //Database1.Params.Values['USER NAME']:='u_'+StrZero(vcodusu,6);
+        //Database1.Params.Values['PASSWORD']:=IntToStr(Trunc(vcodusu/7)*11);
+        //Database1.Connected:=True;
       End
      Else
       Begin

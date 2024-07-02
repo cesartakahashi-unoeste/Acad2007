@@ -39,7 +39,7 @@ object Menuprin: TMenuprin
       'COLLCHAR='
       'BLOBS TO CACHE=64'
       'BLOB SIZE=32'
-      'PASSWORD=67672')
+      'PASSWORD=6429956')
     SessionName = 'Default'
     Left = 48
     Top = 48

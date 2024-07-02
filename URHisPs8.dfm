@@ -2796,7 +2796,7 @@ object FRHisPs8: TFRHisPs8
           mmHeight = 6879
           mmLeft = 1852
           mmTop = 64029
-          mmWidth = 26458
+          mmWidth = 38118
           BandType = 3
           GroupNo = 0
           LayerName = Foreground5
@@ -2839,7 +2839,7 @@ object FRHisPs8: TFRHisPs8
           mmHeight = 3969
           mmLeft = 2910
           mmTop = 66675
-          mmWidth = 23548
+          mmWidth = 35738
           BandType = 3
           GroupNo = 0
           LayerName = Foreground5
@@ -2849,7 +2849,7 @@ object FRHisPs8: TFRHisPs8
           DesignLayer = ppDesignLayer6
           UserName = 'Shape35'
           mmHeight = 6879
-          mmLeft = 34918
+          mmLeft = 44458
           mmTop = 64029
           mmWidth = 34408
           BandType = 3
@@ -2870,7 +2870,7 @@ object FRHisPs8: TFRHisPs8
           FormField = False
           Transparent = True
           mmHeight = 2646
-          mmLeft = 35712
+          mmLeft = 45252
           mmTop = 64029
           mmWidth = 11113
           BandType = 3
@@ -2892,7 +2892,7 @@ object FRHisPs8: TFRHisPs8
           FormField = False
           Transparent = True
           mmHeight = 3969
-          mmLeft = 35977
+          mmLeft = 45517
           mmTop = 66675
           mmWidth = 32293
           BandType = 3
@@ -2904,7 +2904,7 @@ object FRHisPs8: TFRHisPs8
           DesignLayer = ppDesignLayer6
           UserName = 'Shape36'
           mmHeight = 6879
-          mmLeft = 76200
+          mmLeft = 82560
           mmTop = 64029
           mmWidth = 26458
           BandType = 3
@@ -2925,7 +2925,7 @@ object FRHisPs8: TFRHisPs8
           FormField = False
           Transparent = True
           mmHeight = 2646
-          mmLeft = 76994
+          mmLeft = 83354
           mmTop = 64029
           mmWidth = 11377
           BandType = 3
@@ -2947,7 +2947,7 @@ object FRHisPs8: TFRHisPs8
           FormField = False
           Transparent = True
           mmHeight = 3969
-          mmLeft = 77258
+          mmLeft = 83618
           mmTop = 66675
           mmWidth = 23548
           BandType = 3
@@ -3227,7 +3227,7 @@ object FRHisPs8: TFRHisPs8
           DesignLayer = ppDesignLayer6
           UserName = 'Line67'
           Weight = 0.750000000000000000
-          mmHeight = 2117
+          mmHeight = 1057
           mmLeft = 1323
           mmTop = 63500
           mmWidth = 193675
