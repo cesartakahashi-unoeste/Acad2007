@@ -15,6 +15,7 @@ object Menuprin: TMenuprin
   TextHeight = 13
   object Database1: TDatabase
     AliasName = 'unoeste'
+    Connected = True
     DatabaseName = 'unoeste'
     LoginPrompt = False
     Params.Strings = (

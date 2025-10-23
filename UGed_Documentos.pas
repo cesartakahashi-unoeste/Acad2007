@@ -157,6 +157,11 @@ private
         fimagens: ImagensViewModel;
         fpasta: PastaViewModel;
         fdoc_usanodiploma: string;
+        ftdo_seq: integer;
+        faut_seq: integer;
+        floc_seq: integer;
+        fdoc_assunto: string;
+        fdoc_titulo: string;
         fassinaturas:TObjectList;
  public
     constructor create;
@@ -185,6 +190,11 @@ private
    property imagens          : ImagensViewModel read fimagens write fimagens;
    property pasta            : PastaViewModel read fpasta write fpasta;
    property doc_usanodiploma : string read fdoc_usanodiploma write fdoc_usanodiploma;
+   property tdo_seq          : integer read         ftdo_seq         write ftdo_seq;
+   property aut_seq          : integer read         faut_seq         write faut_seq;
+   property loc_seq          : integer read         floc_seq         write floc_seq;
+   property doc_assunto      : string read fdoc_assunto write fdoc_assunto;
+   property doc_titulo       : string read fdoc_titulo write fdoc_titulo;
    property assinaturas      : TObjectList read fassinaturas write fassinaturas;
 end;
 

@@ -317,6 +317,8 @@ type
   function ObterTodasPorDocumento(doc:integer):TObjectList;
   //function Gera_Fluxo(docs:TObjectList):TObjectList;
   Function Recupera_Periodo_Vestibular(dataini,datafim:TDateTime) : String;
+  Function  Achou_AdicionalPos(MT:TMemoryTable;Q:TQuery):Boolean;
+  Function  Achou_DisciplinaPos(MT:TMemoryTable;Q:TQuery):Boolean;
 
 const
   msg1 = 'Caractere(s) inválido(s) no início do e-mail.';
@@ -9570,7 +9572,8 @@ Begin
           If qconsccl['ahb_codgra'] >= 17 // Deve aparecer resolução
           Then
            Begin
-            rec:=' - RESOLUÇÃO Nº 2 CNE/CES, DE 19/02/2002';
+            //rec:=' - RESOLUÇÃO Nº 2 CNE/CES, DE 19/02/2002';
+            rec:=' - CONFORME RESOLUÇÕES MINISTERIAIS VIGENTES';
             If QDadAlu['cur_autdcp'] = 1
             Then LHab.Caption:='AUT. PORTARIA N°'+QDadAlu['cur_autndc']+' D.O.U. '+DateToStr(QDadAlu['cur_autdata'])+' - '+Renovacao(QDadAlu['cur_codigo'],2)
             Else LHab.Caption:='REC. PORTARIA N°'+QDadAlu['cur_autndc']+' D.O.U. '+DateToStr(QDadAlu['cur_autdata'])+' - '+Renovacao(QDadAlu['cur_codigo'],2);
@@ -14494,5 +14497,64 @@ Begin
 //   Else Result:=Mes[VMes]+'/'+IntToStr(VAno);
   Result:=Mes[MesFim]+'/'+IntToStr(VAno); // A partir de agora o Elias pediu para pegar o mês da data final - 10/02/2022
 End;
+
+// **** Funções comuns para emissão do Histórico Escolar Pós Graduação ****
+
+Function Achou_DisciplinaPos(MT:TMemoryTable;Q:TQuery):Boolean;
+var achou:boolean;
+Begin
+ achou:=false;
+ MT.First;
+ While not MT.Eof do
+ Begin
+  If (Q['his_perlet'] = MT['his_perlet']) and (Q['his_semref'] = MT['his_semref']) and
+     (Q['mod_seq'] = MT['mod_seq'])
+  Then
+   Begin
+    achou:=true;
+    break;
+   End;
+  MT.Next;
+ End;
+ If achou
+ Then Achou_DisciplinaPos:=true
+ Else
+  Begin
+   MT.Append;
+   MT['his_perlet']:=Q['his_perlet'];
+   MT['his_semref']:=Q['his_semref'];
+   MT['mod_seq']:=Q['mod_seq'];
+   MT.Post;
+   Achou_DisciplinaPos:=False;
+  End;
+End;
+
+Function Achou_AdicionalPos(MT:TMemoryTable;Q:TQuery):Boolean;
+var achou:boolean;
+Begin
+ achou:=false;
+ MT.First;
+ While not MT.Eof do
+ Begin
+  If (Q['adi_nro'] = MT['adi_nro'])
+  Then
+   Begin
+    achou:=true;
+    break;
+   End;
+  MT.Next;
+ End;
+ If achou
+ Then Achou_AdicionalPos:=true
+ Else
+  Begin
+   MT.Append;
+   MT['adi_nro']:=Q['adi_nro'];
+   MT.Post;
+   Achou_AdicionalPos:=False;
+  End;
+End;
+
+//***********************************************************
 
 end.

@@ -13,9 +13,10 @@ uses
   URHist8 in 'URHist8.pas' {FRHist8},
   URHisPs8 in 'URHisPs8.pas' {FRHisPs8},
   URHisPs7 in 'URHisPs7.pas' {FRHisPs7},
-  URotinas in 'Z:\acadr2D5\URotinas.pas',
+  URotinas in 'Z:\acadD2007\URotinas.pas',
   Uargrade in 'Uargrade.pas' {F_AntGrade},
-  Ulocgrad in 'Ulocgrad.pas' {F_LocGrade};
+  Ulocgrad in 'Ulocgrad.pas' {F_LocGrade},
+  URHisto2 in 'URHisto2.pas' {FRHisto2};
 
 {$R *.RES}
 

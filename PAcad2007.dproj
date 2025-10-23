@@ -41,6 +41,28 @@
       
       
       
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
       <Excluded_Packages Name="C:\Documents and Settings\All Users\Documentos\RAD Studio\5.0\Bpl\rvrb16D7.bpl">RichView wrapper for ReportBuilder 16</Excluded_Packages>
       <Excluded_Packages Name="$(BDS)\bin\dclofficexp100.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
     </Excluded_Packages></Delphi.Personality><ModelSupport>False</ModelSupport></BorlandProject></BorlandProject>
@@ -83,6 +105,10 @@
     <DCCReference Include="URHist9.pas">
       <Form>FRHist9</Form>
     </DCCReference>
+    <DCCReference Include="URHisto2.pas">
+      <Form>FRHisto2</Form>
+    </DCCReference>
+    <DCCReference Include="Z:\acadD2007\URotinas.pas" />
     <DCCReference Include="Z:\acadr2D5\URotinas.pas" />
   </ItemGroup>
 </Project>

@@ -104,10 +104,6 @@ type
     ppDBPipeline8: TppDBPipeline;
     RHistor: TppReport;
     HBHistor: TppHeaderBand;
-    ppShape53: TppShape;
-    ppLine55: TppLine;
-    LContinua: TppLabel;
-    LFolha2: TppLabel;
     DBDisc: TppDetailBand;
     ppLine10: TppLine;
     ppLine11: TppLine;
@@ -118,8 +114,6 @@ type
     ppLine16: TppLine;
     ppLine17: TppLine;
     FBHistor: TppFooterBand;
-    ppShape3: TppShape;
-    LContinua2: TppLabel;
     SBHistor: TppSummaryBand;
     ppShape2: TppShape;
     LCidade2: TppLabel;
@@ -213,13 +207,13 @@ type
     ppLabel39: TppLabel;
     LCurSup: TppLabel;
     ppShape34: TppShape;
-    ppLabel40: TppLabel;
+    LRegDiploma: TppLabel;
     LRegDipl: TppLabel;
     ppShape35: TppShape;
-    ppLabel41: TppLabel;
+    LLivro: TppLabel;
     LNLivro: TppLabel;
     ppShape36: TppShape;
-    ppLabel42: TppLabel;
+    LFolha: TppLabel;
     LNFolha: TppLabel;
     ppShape37: TppShape;
     ppLabel43: TppLabel;
@@ -227,8 +221,8 @@ type
     ppShape38: TppShape;
     ppLabel44: TppLabel;
     LDatReg: TppLabel;
-    ppShape39: TppShape;
-    ppLabel45: TppLabel;
+    SLocalReg: TppShape;
+    LLocalReg: TppLabel;
     LLocReg: TppLabel;
     ppLabel46: TppLabel;
     ppLine64: TppLine;
@@ -409,13 +403,6 @@ type
     QGedArea: TQuery;
     QUsuDoc: TQuery;
     QDocComprob: TQuery;
-    LEndereco: TppLabel;
-    ppLabel1: TppLabel;
-    ppImage2: TppImage;
-    ppLine1: TppLine;
-    ppLabel24: TppLabel;
-    ppLabel25: TppLabel;
-    ppLabel26: TppLabel;
     CBAtualiza: TCheckBox;
     QItensLivDip: TQuery;
     QAdicionaadi_nomeprof: TStringField;
@@ -435,8 +422,19 @@ type
     QHistoricoDigital: TQuery;
     CBValida: TCheckBox;
     ppRegion2: TppRegion;
-    BarCode: Tpp2DBarCode;
     Memo: TppMemo;
+    LCodVal: TppLabel;
+    LHistorico: TppLabel;
+    BarCode: Tpp2DBarCode;
+    ppShape53: TppShape;
+    ppLine55: TppLine;
+    LContinua: TppLabel;
+    ppImage1: TppImage;
+    LEndereco2: TppLabel;
+    ppImage2: TppImage;
+    LEndereco: TppLabel;
+    ppLine1: TppLine;
+    LPagina: TppLabel;
     procedure MERAEnter(Sender: TObject);
     procedure MERAExit(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -632,6 +630,12 @@ begin
   Else
    If DEExp.Date = 0
    Then DEExp.Date:=DataSis;
+  If vexibe = 'S'
+  Then
+   Begin
+     vitl_seq:=0;
+     vhdg_seq:=0;
+   End;
 //  If vRA <> 0
 //  Then MERA.Text:=FloatToStr(vRA);
 end;
@@ -654,8 +658,8 @@ begin
       sblocalu.visible:=false;
       QGedArea.Close;
       QGedArea.Sql.Clear;
-      QGedArea.Sql.Add('select * from sca_gedarea');
-      QGedArea.Sql.Add('where cur_grapos =:grapos and cur_area =:area and cur_gradistancia =:gradistancia and cam_codigo =:campus and');
+      QGedArea.Sql.Add('select * from sca_gedarea ga, ged_areas a');
+      QGedArea.Sql.Add('where ga.are_codigo = a.are_codigo and cur_grapos =:grapos and cur_area =:area and cur_gradistancia =:gradistancia and cam_codigo =:campus and');
       If tipo_historico = 'F' // histórico escolar final do diploma
       Then QGedArea.Sql.Add('gat_tipo = "D"')
       Else QGedArea.Sql.Add('gat_tipo = "P"');
@@ -726,6 +730,7 @@ end;
 
 procedure TFRHisPs8.FormActivate(Sender: TObject);
 begin
+//  LRecredenciamento.Caption:=vRecredenciamento;
   If vexibe = 'S'
   Then MERA.SetFocus;
 end;
@@ -790,6 +795,7 @@ begin
                 Exit;
             end;
 
+//  LRecredenciamento.Caption:=vRecredenciamento;
   vdataAtual:=FormatDateTime('yyyy/mm/dd', DataSis);
   vdataAtual:=StringReplace(vdataAtual, '/','-',[rfIgnoreCase,rfReplaceAll]);
   RGHist.ItemIndex:=0;
@@ -1019,6 +1025,8 @@ begin
     If vexibe = 'S'
     Then Panel2.SetFocus;
     FRHisPs8.Enabled:=False;
+    LEndereco.Font.Color := RGB(0, 107, 52);
+    LEndereco2.Font.Color := RGB(0, 107, 52);
     If Libera_Historico(StrToFloat(Trim(MERA.Text)), 1)
     Then
      Begin
@@ -1026,21 +1034,27 @@ begin
        Then
         Begin
           LEndereco.TextAlignment:=taCentered;
-          LEndereco.Caption:='Campus I Rua José Bongiovani, 700 - Cidade Universitária - CEP 19050-920 - Presidente Prudente - SP - Tel: 18 3229-1000 - Campus II - Rodovia Raposo Tavares, KM 572 - Bairro Limoeiro - CEP 19067-175 - Presidente Prudente - SP - Tel: 18 3229-2000';
+          LEndereco.Caption:=EnderecoPrudente;
+          LEndereco2.TextAlignment:=taCentered;
+          LEndereco2.Caption:=EnderecoPrudente;
         End
        Else
        If qconsalu['cam_codigo'] = 7 // Jaú
        Then
         Begin
           LEndereco.TextAlignment:=taRightJustified;
-          LEndereco.Caption:='Campus Jaú Avenida Antônio de Almeida Pacheco, nº2945, 2ª Zona Industrial - CEP 17213-700 - Jaú - SP';
+          LEndereco.Caption:=EnderecoJau;
+          LEndereco2.TextAlignment:=taRightJustified;
+          LEndereco2.Caption:=EnderecoJau;
         End
        Else
         If qconsalu['cam_codigo'] = 8 // Guarujá
         Then
          Begin
            LEndereco.TextAlignment:=taRightJustified;
-           LEndereco.Caption:='Campus Guarujá Rua M, 85 Esquina com Rua Bolivia - Central Park Residence - Enseada - CEP 11441-225 - Guarujá - SP';
+           LEndereco.Caption:=EnderecoGuaruja;
+           LEndereco2.TextAlignment:=taRightJustified;
+           LEndereco2.Caption:=EnderecoGuaruja;
          End;
 
        Try
@@ -1133,9 +1147,9 @@ begin
                vnota1:=0;vnota2:=0;
                cursou99:=false;
                FBHistor.Height:=0.26;
-               LContinua2.Top:=0.0625;
+//               LContinua2.Top:=0.0625;
 
-               Carrega_Historico_Psicologia(QRFicha, QDadAlu, QConsHab, QGradLet, qconsccl2, QCHAtiv, QEquival, QAdiciona, MDFicha, cursando1, cursando2, lancado, disp1, disp2, disp4, cursou99, codobs, vnota1, vnota2, NHab);
+               Carrega_Historico_Psicologia(QRFicha, QDadAlu, QConsHab, QGradLet, qconsccl2, QCHAtiv, QEquival, QAdiciona, MDFicha, cursando1, cursando2, lancado, disp1, disp2, disp4, cursou99, codobs, vnota1, vnota2, NHab, false);
                if vsegundavia = 'N' then
                   Carrega_Professores_Historico_Psicologia_Geral(StrToFloat(Trim(MERA.Text)),QDadAlu['cur_codigo'],0,NHab,qconsccl2['ahb_codgra'],MDProf,QAdiciona,valida_historico);
 
@@ -1274,10 +1288,15 @@ begin
                         documento.doc_nivelprocesso:='I';
                         documento.doc_dataarm:=DelphiDateTimeToISO8601Date(Pega_DataHora);
                         documento.doc_extarq :='PDF';
+                        documento.tdo_seq:=74;
+                        documento.aut_seq:=1;
+                        documento.loc_seq:=1; // Campus I
+                        documento.doc_assunto:=QGedArea['are_descr'];
                         If tipo_historico = 'F' // histórico escolar final do registro do diploma
                         Then
                          Begin
                            documento.doc_nomearquivo:='RVHE_' +IntToStr(vitl_seq) + '.PDF';
+                           documento.doc_titulo:='RVHE_' + IntToStr(vitl_seq);
                            documento.doc_arquivo:=vPastaServidor + IntToStr(pastaEDocumentos.Pasta.are_codigo) + '\' +
                            IntToStr(pastaEDocumentos.Pasta.pst_codigo) + '\pdf\RVHE_' +IntToStr(vitl_seq) + '.PDF';
                            docbase64:=EncodeFile(C_PASTA_TEMPORARIA+'\RVHE_'+IntToStr(vitl_seq)+'.PDF');
@@ -1289,6 +1308,7 @@ begin
                          Then
                           Begin
                             documento.doc_nomearquivo:='RVHECONFERENCIA'+IntToStr(NHab)+'_'+vdataAtual+'.PDF';
+                            documento.doc_titulo:='RVHECONFERENCIA'+IntToStr(NHab)+'_'+vdataAtual;
                             documento.doc_arquivo:=vPastaServidor + IntToStr(pastaEDocumentos.Pasta.are_codigo) + '\' +
                             IntToStr(pastaEDocumentos.Pasta.pst_codigo) + '\pdf\RVHECONFERENCIA'+IntToStr(NHab)+'_'+vdataAtual+'.PDF';
                             docbase64:=EncodeFile(C_PASTA_TEMPORARIA+'\RVHECONFERENCIA'+IntToStr(NHab)+'_'+vdataAtual+'.PDF');
@@ -1298,6 +1318,7 @@ begin
                          Else
                           Begin
                             documento.doc_nomearquivo:='RVHEPARCIAL_' +IntToStr(vhdg_seq) + '.PDF';
+                            documento.doc_titulo:='RVHEPARCIAL_' +IntToStr(vhdg_seq);
                             documento.doc_arquivo:=vPastaServidor + IntToStr(pastaEDocumentos.Pasta.are_codigo) + '\' +
                             IntToStr(pastaEDocumentos.Pasta.pst_codigo) + '\pdf\RVHEPARCIAL_' +IntToStr(vhdg_seq) + '.PDF';
                             docbase64:=EncodeFile(C_PASTA_TEMPORARIA+'\RVHEPARCIAL_'+IntToStr(vhdg_seq)+'.PDF');
@@ -1591,9 +1612,14 @@ begin
                         documento.doc_dataarm:=DelphiDateTimeToISO8601Date(Pega_DataHora);
                         documento.doc_extarq :='PDF';
                         documento.doc_nomearquivo:='HISTORICODC_' + IntToStr(vitl_seq) + '.PDF';
+                        documento.doc_titulo:='HISTORICODC_' + IntToStr(vitl_seq);
                         documento.doc_arquivo:=vPastaServidor + IntToStr(pastaEDocumentos.Pasta.are_codigo) + '\' + IntToStr(pastaEDocumentos.Pasta.pst_codigo) + '\pdf\HISTORICODC_' + IntToStr(vitl_seq) + '.PDF';
                         documento.doc_ativo:='S';
                         documento.doc_usanodiploma:='S';
+                        documento.tdo_seq:=74;
+                        documento.aut_seq:=1;
+                        documento.loc_seq:=1; // Campus I
+                        documento.doc_assunto:=NULLToSpace(QGedArea['are_descr']);
                         imagem:=ImagensViewModel.Create();
                         docbase64:=EncodeFile(C_PASTA_TEMPORARIA+'\HISTORICO_'+Trim(MERA.Text)+'.PDF');
                         imagem.doc_imagemstr:=docbase64;
@@ -1752,9 +1778,9 @@ begin
                vnota1:=0;vnota2:=0;
                cursou99:=false;
                FBHistor.Height:=0.26;
-               LContinua2.Top:=0.0625;
+//               LContinua2.Top:=0.0625;
 
-               Carrega_Historico_Psicologia(QRFicha, QDadAlu, QConsHab, QGradLet, qconsccl2, QCHAtiv, QEquival, QAdiciona, MDFicha, cursando1, cursando2, lancado, disp1, disp2, disp4, cursou99, codobs, vnota1, vnota2, NHab);
+               Carrega_Historico_Psicologia(QRFicha, QDadAlu, QConsHab, QGradLet, qconsccl2, QCHAtiv, QEquival, QAdiciona, MDFicha, cursando1, cursando2, lancado, disp1, disp2, disp4, cursou99, codobs, vnota1, vnota2, NHab, false);
                if vsegundavia = 'N' then
                   Carrega_Professores_Historico_Psicologia_Geral(StrToFloat(Trim(MERA.Text)),QDadAlu['cur_codigo'],0,NHab,qconsccl2['ahb_codgra'],MDProf,QAdiciona,valida_historico);
 
@@ -1803,9 +1829,9 @@ begin
                   vnota1:=0;vnota2:=0;
                   cursou99:=false;
                   FBHistor.Height:=0.26;
-                  LContinua2.Top:=0.0625;
+//                  LContinua2.Top:=0.0625;
 
-                  Carrega_Historico_Psicologia(QRFicha, QDadAlu, QConsHab, QGradLet, qconsccl2, QCHAtiv, QEquival, QAdiciona, MDFicha, cursando1, cursando2, lancado, disp1, disp2, disp4, cursou99, codobs, vnota1, vnota2, NHab);
+                  Carrega_Historico_Psicologia(QRFicha, QDadAlu, QConsHab, QGradLet, qconsccl2, QCHAtiv, QEquival, QAdiciona, MDFicha, cursando1, cursando2, lancado, disp1, disp2, disp4, cursou99, codobs, vnota1, vnota2, NHab, false);
                   if vsegundavia = 'N' then
                      Carrega_Professores_Historico_Psicologia_Geral(StrToFloat(Trim(MERA.Text)),QDadAlu['cur_codigo'],0,NHab,qconsccl2['ahb_codgra'],MDProf,QAdiciona,valida_historico);
 
@@ -1854,9 +1880,9 @@ begin
                   vnota1:=0;vnota2:=0;
                   cursou99:=false;
                   FBHistor.Height:=0.26;
-                  LContinua2.Top:=0.0625;
+//                  LContinua2.Top:=0.0625;
 
-                  Carrega_Historico_Psicologia(QRFicha, QDadAlu, QConsHab, QGradLet, qconsccl2, QCHAtiv, QEquival, QAdiciona, MDFicha, cursando1, cursando2, lancado, disp1, disp2, disp4, cursou99, codobs, vnota1, vnota2, NHab);
+                  Carrega_Historico_Psicologia(QRFicha, QDadAlu, QConsHab, QGradLet, qconsccl2, QCHAtiv, QEquival, QAdiciona, MDFicha, cursando1, cursando2, lancado, disp1, disp2, disp4, cursou99, codobs, vnota1, vnota2, NHab, false);
                   if vsegundavia = 'N' then
                      Carrega_Professores_Historico_Psicologia_Geral(StrToFloat(Trim(MERA.Text)),QDadAlu['cur_codigo'],0,NHab,qconsccl2['ahb_codgra'],MDProf,QAdiciona,valida_historico);
 
@@ -2096,7 +2122,6 @@ begin
                           historicopdf:=docaux.doc_codigo;
                        docaux.free;
                      end;
-
                      documento:=DocumentosViewModel.Create();
                      //documento.doc_codigo:=NULLToZero(QItensLivDip['itl_historicopdf']);
                      documento.doc_codigo:=historicopdf;
@@ -2105,11 +2130,15 @@ begin
                      documento.doc_nivelprocesso:='I';
                      documento.doc_dataarm:=DelphiDateTimeToISO8601Date(Pega_DataHora);
                      documento.doc_extarq :='PDF';
-
+                     documento.tdo_seq:=74;
+                     documento.aut_seq:=1;
+                     documento.loc_seq:=1; // Campus I
+                     documento.doc_assunto:=NULLToSpace(QGedArea['are_descr']);
                      If tipo_historico = 'F' // histórico escolar final do registro do diploma
                      Then
                       Begin
                         documento.doc_nomearquivo:='RVHE_' + IntToStr(vitl_seq) + '.PDF';
+                        documento.doc_titulo:='RVHE_' + IntToStr(vitl_seq);
                         documento.doc_arquivo:=vPastaServidor + IntToStr(pastaEDocumentos.Pasta.are_codigo) + '\' +
                         IntToStr(pastaEDocumentos.Pasta.pst_codigo) + '\pdf\RVHE_' + IntToStr(vitl_seq) + '.PDF';
                         docbase64:=EncodeFile(C_PASTA_TEMPORARIA+'\RVHE_'+IntToStr(vitl_seq)+'.PDF');
@@ -2121,6 +2150,7 @@ begin
                       Then
                        Begin
                          documento.doc_nomearquivo:='RVHECONFERENCIA'+IntToStr(NHab)+'_'+vdataAtual+'.PDF';
+                         documento.doc_titulo:='RVHECONFERENCIA'+IntToStr(NHab)+'_'+vdataAtual;
                          documento.doc_arquivo:=vPastaServidor + IntToStr(pastaEDocumentos.Pasta.are_codigo) + '\' +
                          IntToStr(pastaEDocumentos.Pasta.pst_codigo) + '\pdf\RVHECONFERENCIA'+IntToStr(NHab)+'_'+vdataAtual+'.PDF';
                          docbase64:=EncodeFile(C_PASTA_TEMPORARIA+'\RVHECONFERENCIA'+IntToStr(NHab)+'_'+vdataAtual+'.PDF');
@@ -2130,6 +2160,7 @@ begin
                       Else
                        Begin
                          documento.doc_nomearquivo:='RVHEPARCIAL_' + IntToStr(vhdg_seq) + '.PDF';
+                         documento.doc_titulo:='RVHEPARCIAL_' + IntToStr(vhdg_seq);
                          documento.doc_arquivo:=vPastaServidor + IntToStr(pastaEDocumentos.Pasta.are_codigo) + '\' +
                          IntToStr(pastaEDocumentos.Pasta.pst_codigo) + '\pdf\RVHEPARCIAL_' + IntToStr(vhdg_seq) + '.PDF';
                          docbase64:=EncodeFile(C_PASTA_TEMPORARIA+'\RVHEPARCIAL_'+IntToStr(vhdg_seq)+'.PDF');
@@ -2410,9 +2441,14 @@ begin
                      documento.doc_dataarm:=DelphiDateTimeToISO8601Date(Pega_DataHora);
                      documento.doc_extarq :='PDF';
                      documento.doc_nomearquivo:='HISTORICODC_' + IntToStr(vitl_seq) + '.PDF';
+                     documento.doc_titulo:='HISTORICODC_' + IntToStr(vitl_seq);
                      documento.doc_arquivo:=vPastaServidor + IntToStr(pastaEDocumentos.Pasta.are_codigo) + '\' + IntToStr(pastaEDocumentos.Pasta.pst_codigo) + '\pdf\HISTORICODC_' + IntToStr(vitl_seq) + '.PDF';
                      documento.doc_ativo:='S';
                      documento.doc_usanodiploma:='S';
+                     documento.tdo_seq:=74;
+                     documento.aut_seq:=1;
+                     documento.loc_seq:=1; // Campus I
+                     documento.doc_assunto:=NULLToSpace(QGedArea['are_descr']);
                      imagem:=ImagensViewModel.Create();
                      docbase64:=EncodeFile(C_PASTA_TEMPORARIA+'\HISTORICO_'+Trim(MERA.Text)+'.PDF');
                      imagem.doc_imagemstr:=docbase64;
@@ -2659,11 +2695,13 @@ end;
 procedure TFRHisPs8.HBHistorBeforePrint(Sender: TObject);
 begin
  LContinua.Caption:='Continuação do Histórico Escolar de '+QDadAlu['pes_nome']+'   ';
- LFolha2.Caption:='Página : '+IntToStr(RHistor.AbsolutePageNo)+' de '+IntToStr(RHistor.AbsolutePageCount);
+// LFolha2.Caption:='Página : '+IntToStr(RHistor.AbsolutePageNo)+' de '+IntToStr(RHistor.AbsolutePageCount);
+ LPagina.Caption:='Página : '+IntToStr(RHistor.AbsolutePageNo)+' de '+IntToStr(RHistor.AbsolutePageCount);
 end;
 
 procedure TFRHisPs8.GHBHistorBeforePrint(Sender: TObject);
 var hab,rec:string;
+    vmesing:word;
 begin
  LPag.Caption:=IntToStr(RHistor.AbsolutePageNo)+' de '+IntToStr(RHistor.AbsolutePageCount);
 // LFac.Caption:='FACULDADE DE '+NULLToSpace(QDadAlu['fac_nome']);
@@ -2772,6 +2810,7 @@ begin
    Ajusta_Quadro(ppLabel46, ppLabel47, ppLabel51, ppLine64, 1);
    Visivel(FRHisPs8,2);
    Invisivel(FRHisPs8,1);
+   Invisivel(FRHisPs8,10);
    Desloca(FRHisPs8,3,0.65,0,0,0);
    Desloca(FRHisPs8,4,0.645,0,0,0);
    SCab.Height:=2.10;
@@ -2808,28 +2847,71 @@ begin
   End
  Else
   Begin
-   SCab.Height:=2.78;
-   GHBHistor.Height:=3.78;
-   Visivel(FRHisPs8,1);
-   Invisivel(FRHisPs8,2);
-   Desloca(FRHisPs8,4,0,0.063,0,0);
-   ppLine62.Top:=3.125;
-   QCurSup.Close;
-   QCurSup.ParambyName('ra').AsFloat:=StrToFloat(Trim(MERA.Text));
-//   QCurSup.ParamByName('codhab').AsSmallInt:=qconsccl['hab_codigo'];
-   QCurSup.Open;
-   LCurSup.Caption:=NULLToSpace(QCurSup['acs_cursup']);
-   LRegDipl.Caption:=NULLToSpace(QCurSup['acs_nrreg1']);
-   LNLivro.Caption:=NULLToSpace(QCurSup['acs_nrlivro']);
-   LNFolha.Caption:=NULLToSpace(QCurSup['acs_nrfolha']);
-   LNProc.Caption:=NULLToSpace(QCurSup['acs_processo']);
-   If QCurSup['acs_datreg'] <> Null
-   Then LDatReg.Caption:=DateToStr(QCurSup['acs_datreg'])
-   Else LDatReg.Caption:='********';
-   LLocReg.Caption:=NULLToSpace(QCurSup['acs_locreg']);
-   LDatVest.Caption:='**************';
-   LPontos.Caption:='***';
-   LEntidade.Caption:='*************************';
+    QCurSup.Close;
+    QCurSup.ParambyName('ra').AsFloat:=StrToFloat(Trim(MERA.Text));
+ //   QCurSup.ParamByName('codhab').AsSmallInt:=qconsccl['hab_codigo'];
+    QCurSup.Open;
+    Visivel(FRHisPs8,1);
+    Invisivel(FRHisPs8,2);
+    Invisivel(FRHisPs8,5);
+
+    If (NULLToZero(QDadAlu['alu_anoing']) > 2025) or ((NULLToZero(QDadAlu['alu_anoing']) = 2025) and (NULLToZero(QDadAlu['alu_seming']) = 2) and (NULLToZero(QDadAlu['alu_mesing']) = 10))
+    Then
+     Begin
+       Invisivel(FRHisPs8,10); // campos referentes a entrada por curso superior que irão aparecer a partir dos ingressantes de outubro de 2025
+       LRegDiploma.Caption:='Mês e Ano';
+       LLivro.Caption:='Data de Conclusão';
+       LFolha.Caption:='Data de Colação';
+       LLocalReg.Caption:='Nome da Instituição';
+       SLocalReg.Left:=0.0729;
+       SLocalReg.Width:=7.5625;
+       LLocalReg.Left:=0.1042;
+       LLocReg.Left:=0.1146;
+       LLocReg.Width:=7.4896;
+       vmesing:=NULLToZero(QDadAlu['alu_mesing']);
+       If vmesing <> 0
+       Then LRegDipl.Caption:=Mes[vmesing] + '/' + IntToStr(NULLToZero(QDadAlu['alu_anoing']))
+       Else LRegDipl.Caption:='';
+       LNLivro.Caption:='';
+       LNFolha.Caption:='';
+       If QCurSup['acs_conclusao'] <> null
+       Then LNLivro.Caption:=DateToStr(QCurSup['acs_conclusao']);
+       If QCurSup['acs_colacao'] <> null
+       Then LNFolha.Caption:=DateToStr(QCurSup['acs_colacao']);
+     End
+    Else
+     Begin
+       Visivel(FRHisPs8,10); // campos referentes a entrada por curso superior que não irão aparecer até os ingressantes de julho de 2025
+       LRegDiploma.Caption:='Nº Reg. Diploma';
+       LLivro.Caption:='Nº do Livro';
+       LFolha.Caption:='Nº da Folha';
+       LLocalReg.Caption:='Local do Registro';
+       SLocalReg.Left:=1.2396;
+       LLocalReg.Left:=1.2708;
+       SLocalReg.Width:=6.3958;
+       LLocReg.Left:=1.2813;
+       LLocReg.Width:=6.3125;
+       LRegDipl.Caption:=NULLToSpace(QCurSup['acs_nrreg1']);
+       LNLivro.Caption:=NULLToSpace(QCurSup['acs_nrlivro']);
+       LNFolha.Caption:=NULLToSpace(QCurSup['acs_nrfolha']);
+       LNProc.Caption:=NULLToSpace(QCurSup['acs_processo']);
+       If QCurSup['acs_datreg'] <> Null
+       Then LDatReg.Caption:=DateToStr(QCurSup['acs_datreg'])
+       Else LDatReg.Caption:='********';
+     End;
+
+    ppLine61.Height:=0.9687; // linha lateral direita do quadro de curso superior
+    ppLine63.Height:=0.9271; // linha lateral esquerda do quadro de curso superior
+    ppLine62.Top:=3.125; // linha inferior do quadro de curso superior
+    Desloca(FRHisPs8,4,0,0.063,0,0);
+    SCab.Height:=2.78;
+    GHBHistor.Height:=3.78;
+
+    LCurSup.Caption:=NULLToSpace(QCurSup['acs_cursup']);
+    LLocReg.Caption:=NULLToSpace(QCurSup['acs_locreg']);
+    LDatVest.Caption:='**************';
+    LPontos.Caption:='***';
+    LEntidade.Caption:='*************************';
   End;
  If qconsccl['ahb_conclusao'] <> Null
  Then LConclusao.Caption:=DateToStr(qconsccl['ahb_conclusao'])
@@ -3254,13 +3336,18 @@ begin
 //  If (Trim(NULLToSpace(QItensLivDip['itl_codvalhistorico'])) <> '') and (rvhe) // and (valida_historico = 'S')
 //  Then BarCode.Data:='https://www.unoeste.br/historicoescolar/' + QItensLivDip['itl_codvalhistorico'];
   If (codvalhistorico <> '') and (rvhe) // and (valida_historico = 'S')
-  Then BarCode.Data:='https://www.unoeste.br/historicoescolar/' + codvalhistorico;
+  Then
+   Begin
+     BarCode.Data:='https://www.unoeste.br/historicoescolar/' + codvalhistorico;
+     LCodVal.Caption:='Código de verificação: ' + codvalhistorico;
+     LHistorico.Caption:='Histórico escolar digital: https://www.unoeste.br/historicoescolar/' + codvalhistorico;
+   End;
   If RHistor.AbsolutePageCount = 1
   Then FBHistor.Height:=0.01
   Else
    Begin
      FBHistor.Height:=0.26;
-     LContinua2.Top:=0.0625;
+//     LContinua2.Top:=0.0625;
    End;
 end;
 
@@ -3508,7 +3595,8 @@ begin
 // If (RHistor.AbsolutePageNo + 1) mod 2 = 0 // Página Par
 // Then LContinua2.Caption:='Continua na página '+StrZero(RHistor.AbsolutePageNo+1,2)+' (Verso)'
 // Else LContinua2.Caption:='Continua na página '+StrZero(RHistor.AbsolutePageNo+1,2);
- LContinua2.Caption:='Continua na página '+StrZero(RHistor.AbsolutePageNo+1,2);
+// LContinua2.Caption:='Continua na página '+StrZero(RHistor.AbsolutePageNo+1,2);
+ LPagina.Caption:='Página : '+IntToStr(RHistor.AbsolutePageNo)+' de '+IntToStr(RHistor.AbsolutePageCount);
 end;
 
 procedure TFRHisPs8.DEExpExit(Sender: TObject);

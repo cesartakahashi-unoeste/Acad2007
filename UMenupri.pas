@@ -53,13 +53,15 @@ var
   DataSis: TDateTime;
   Desab,Desab2,teste, rvhe:boolean;
   CampusI, CampusII, RACurrency, RAMask, vcabprof, vexibe, vGED, valida_historico,
-  tipo_historico, historico_conferencia:string;
+  tipo_historico, historico_conferencia, EnderecoPrudente, EnderecoJau, EnderecoGuaruja:string;
   vRA:real;
   vPastaServidor:string;
+  vRecredenciamento:string;
 
 implementation
 
-uses UProcs, URegDip, URHist8, ULivDipl, URHisPs7, UExtPub, URHist9, URHisPs8, UArGrade;
+uses UProcs, URegDip, URHist8, ULivDipl, URHisPs7, UExtPub, URHist9, URHisPs8, UArGrade,
+  URHisto2;
 
 {$R *.DFM}
 
@@ -170,7 +172,12 @@ End;
 
 procedure TMenuprin.FormCreate(Sender: TObject);
 begin
+  EnderecoPrudente:='Campus I Rua José Bongiovani, 700 - Cidade Universitária - CEP 19050-920 - Presidente Prudente - SP - Tel: 18 3229-1000 - Campus II - Rodovia Raposo Tavares, KM 572 - Bairro Limoeiro - CEP 19067-175 - Presidente Prudente - SP - Tel: 18 3229-2000';
+  EnderecoJau:='Campus Jaú Avenida Antônio de Almeida Pacheco, nº2945, 2ª Zona Industrial - CEP 17213-700 - Jaú - SP';
+  EnderecoGuaruja:='Campus Guarujá Rua Albertino Pedro, nº75, Central Park - Enseada - CEP 11441-225 - Guarujá - SP';
   vPastaServidor:='\\10.1.2.37\GED\UNOESTE\';
+//  vRecredenciamento:='Recredenciada pela Portaria MEC nº 413 D.O.U. 27/03/17 ';
+  vRecredenciamento:='Recredenciada pela Portaria MEC n° 284 D.O.U. 14/04/2025 ';
   vtamfontdisc:=7; // tamanho da fonte do nome da disciplina no histórico escolar
   teste:=false;
   vbanco:='P'; // P - produção D - desenvolvimento
@@ -186,6 +193,7 @@ begin
   // ----------------------------------------------------------------------------------
   FProcs.UrlToken := 'http://localhost:52833/token';
   If (paramcount > 0) or (teste)
+
   Then
    Begin
      If not FileExists('C:\Sistemas\ACADEMICOCSHARP\gsdll32.dll')
@@ -194,22 +202,26 @@ begin
      if teste then
      begin
        vcodusu:=80026;//77188;
-       vtipo:=7;
-       vRA:=51912309; //121735214;
-       //vRA:=131914626;
+       vtipo:=11;
+//       vRA:=132017610; // 121824950; // 1100304371
+//         vRA:=131914626;
+       vRA:=7131500070;
        vhab:=1;
        //vhab:=3;
-       vcurso:=5;
-       //vcurso:=13;
+       //vcurso:=292;//12;
+       vcurso:=713;
        vligacao:=0;
+       vbanco:='P'; // P - produção D - desenvolvimento
+       vGED:='S'; // S - grava documento no GED
+       //vitl_seq:=15510; //13253;
        vitl_seq:=0;
-       //vitl_seq:=12391;
-       vGED:='N';
+       valida_historico:='S'; // S - exibe o histórico escolar somente se todas as disciplinas tiverem professores
        tipo_historico:='F';
        vhdg_seq:=0;
+       historico_conferencia:='N'; // S - gravar o pdf do histórico escolar no atributo hdg_historicoconf
        vsegundavia:='N';
        vcompleta:='N';
-       vexibemensagem:='N';
+       vexibemensagem:='S';
      end
      else
      begin
@@ -412,6 +424,17 @@ begin
            Application.CreateForm(TF_AntGrade, F_AntGrade);
            F_AntGrade.Caption:='Configura Relatório';
            F_AntGrade.Tag:=1;
+         End;
+      10:Begin  // histórico escolar lato sensu EAD
+           vexibe:='S';
+           Application.CreateForm(TFRHisto2, FRHisto2);
+           FRHisto2.ShowModal;
+           FRHisto2.Free;
+         End;
+      11:Begin  // histórico escolar lato sensu EAD
+           vexibe:='N';
+           Application.CreateForm(TFRHisto2, FRHisto2);
+           FRHisto2.Free;
          End;
      End;
    End;
