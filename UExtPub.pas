@@ -268,11 +268,11 @@ begin
        ppRichView1.RichView.AddNL('ANA CRISTINA DE OLIVEIRA LIMA',0,1);
        ppRichView1.RichView.AddNL('Reitora da Unoeste',0,1);}
 
-       ppRichView1.RichView.AddNL('Mantenedora: Associação Prudentina de Educação e Cultura - APEC - CNPJ: 44.860.740/0001-73',0,1);
+       ppRichView1.RichView.AddNL('Mantenedora: EPEC - Empresa Prudentina de Educação e Cultura SA - CNPJ: 44.860.740/0001-73',0,1);
        ppRichView1.RichView.AddNL('',0,0);
        ppRichView1.RichView.AddNL('AVISO/REGISTRO DE DIPLOMAS',0,1);
        ppRichView1.RichView.AddNL('',0,0);
-       ppRichView1.RichView.AddNL('A Associação Prudentina de Educação e Cultura - APEC, para fins do disposto no art. 21 da Portaria Mec. Nº 1.095 de 25 de outubro de 2018, ',0,0);
+       ppRichView1.RichView.AddNL('A EPEC - Empresa Prudentina de Educação e Cultura SA, para fins do disposto no art. 21 da Portaria Mec. Nº 1.095 de 25 de outubro de 2018, ',0,0);
        ppRichView1.RichView.AddNL('torna público que a Universidade do Oeste Paulista - UNOESTE, Instituição de Educação Superior, ',0,-1);
        If vtotal <> 1
        Then
@@ -298,7 +298,7 @@ begin
        ppRichView1.RichView.AddNL('',0,0);
        ppRichView1.RichView.AddNL('Presidente Prudente, '+StrZero(vdia,2)+' de '+Trata_Texto(Mes[vmes])+' de '+IntToStr(vano)+'.',0,1);
        ppRichView1.RichView.AddNL('AUGUSTO CÉSAR DE OLIVEIRA LIMA',0,1);
-       ppRichView1.RichView.AddNL('Diretor Geral APEC',0,1);
+       ppRichView1.RichView.AddNL('Diretor Geral EPEC',0,1);
 
        Menuprin.Database1.Commit;
 

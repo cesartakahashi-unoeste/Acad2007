@@ -181,7 +181,7 @@ begin
   vtamfontdisc:=7; // tamanho da fonte do nome da disciplina no histórico escolar
   teste:=false;
   vbanco:='P'; // P - produção D - desenvolvimento
-  vGED:='S'; // S - grava documento no GED
+  vGED:='N'; // S - grava documento no GED
   tipo_historico:='F'; // F - Final  P - Parcial
   valida_historico:='S'; // S - exibe o histórico escolar somente se todas as disciplinas tiverem professores
   // deixar o valor de historico_conferencia = 'N' pois esse valor tem que ser o padrão
@@ -201,18 +201,18 @@ begin
 
      if teste then
      begin
-       vcodusu:=80026;//77188;
-       vtipo:=11;
+       vcodusu:=43065;//77188;
+       vtipo:=3;
 //       vRA:=132017610; // 121824950; // 1100304371
 //         vRA:=131914626;
-       vRA:=7131500070;
-       vhab:=1;
-       //vhab:=3;
+       vRA:=130114464;
+//       vhab:=1;
+       vhab:=3;
        //vcurso:=292;//12;
-       vcurso:=713;
-       vligacao:=0;
-       vbanco:='P'; // P - produção D - desenvolvimento
-       vGED:='S'; // S - grava documento no GED
+       vcurso:=13;
+       vligacao:=1;
+       vbanco:='D'; // P - produção D - desenvolvimento
+       vGED:='N'; // S - grava documento no GED
        //vitl_seq:=15510; //13253;
        vitl_seq:=0;
        valida_historico:='S'; // S - exibe o histórico escolar somente se todas as disciplinas tiverem professores
@@ -272,10 +272,10 @@ begin
       Begin
         Database1.Connected:=False;
         //Database1.AliasName:='unodes';
-        Database1.Params.Values['SERVER NAME']:='serv_des';
-        Database1.Params.Values['DATABASE NAME']:='unodes';
-        Database1.Params.Values['USER NAME']:='informix';
-        Database1.Params.Values['PASSWORD']:='Infx_123';
+        Database1.Params.Values['SERVER NAME']:='serv_dev';
+        Database1.Params.Values['DATABASE NAME']:='unoeste';
+        Database1.Params.Values['USER NAME']:='u_043065';
+        Database1.Params.Values['PASSWORD']:='6429956';
         Database1.Connected:=True;
         vcodusu:=43065;
       End;

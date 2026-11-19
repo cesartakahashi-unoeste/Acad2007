@@ -1181,7 +1181,7 @@ Begin
               QEnade.Close;
               QEnade.Sql.Clear;
               QEnade.Sql.Add('select count(distinct ena_conclui) tot from sca_enade e, sca_enasituacao s');
-              QEnade.Sql.Add('where e.ena_situacao = s.sit_tipo and alu_ra =:ra and sit_liberadip = "S" and (hab_codigo =:hab1 or hab_codigo =:hab2)');
+              QEnade.Sql.Add('where e.ena_situacao = s.sit_tipo and alu_ra =:ra and sit_liberadip = "S" and (hab_codigo =:hab1 or hab_codigo =:hab2) and ena_med4ano = 0');
               QEnade.ParambyName('ra').AsFloat:=ra;
               QEnade.ParambyName('hab1').AsSmallInt:=hab;
               QEnade.ParambyName('hab2').AsSmallInt:=QAluno['hab_ligacao'];
@@ -1243,7 +1243,7 @@ Begin
               QEnade.Close;
               QEnade.Sql.Clear;
               QEnade.Sql.Add('select count(distinct ena_conclui) tot from sca_enade e, sca_enasituacao s');
-              QEnade.Sql.Add('where e.ena_situacao = s.sit_tipo and alu_ra =:ra and sit_liberahist = "S" and (hab_codigo =:hab1 or hab_codigo =:hab2)');
+              QEnade.Sql.Add('where e.ena_situacao = s.sit_tipo and alu_ra =:ra and sit_liberahist = "S" and (hab_codigo =:hab1 or hab_codigo =:hab2) and ena_med4ano = 0');
               QEnade.ParambyName('ra').AsFloat:=ra;
               QEnade.ParambyName('hab1').AsSmallInt:=hab;
               QEnade.ParambyName('hab2').AsSmallInt:=QAluno['hab_ligacao'];
@@ -9670,7 +9670,7 @@ Begin
  QDadAlu.Sql.Add('p.pes_titulo, p.pes_zonael, p.pes_municipio, p.pes_cpf, p.pes_sexo, p.pes_reserv, p.pes_regmil,');
  QDadAlu.Sql.Add('p.pes_cirmil, a.alu_ra, a.alu_foring, a.alu_foringgov, a.alu_inives, a.alu_fimves, a.alu_totpon,');
  QDadAlu.Sql.Add('a.alu_entidade, a.alu_nrlivro, a.alu_nrfolha, a.alu_datreg, alu_anoing, alu_seming, alu_periodo,');
- QDadAlu.Sql.Add('fac_completo, pes_docestr, p.tde_codigo, tde_sigla, alu_notaenem, pes_nomedefinitivo');
+ QDadAlu.Sql.Add('fac_completo, pes_docestr, p.tde_codigo, tde_sigla, alu_notaenem, pes_nomedefinitivo, a.alu_mesing');
  QDadAlu.Sql.Add('from sca_alunos a, crp_pessoas p, sca_cursos c, outer sca_faculdade f, outer crp_tpdocestr t');
  QDadAlu.Sql.Add('where a.pes_nro = p.pes_nro and a.cur_codigo = c.cur_codigo and');
  QDadAlu.Sql.Add('c.fac_codigo = f.fac_codigo and p.tde_codigo = t.tde_codigo and a.alu_ra =:ra');

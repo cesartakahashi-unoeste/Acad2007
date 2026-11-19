@@ -206,13 +206,13 @@ type
     ppShape33: TppShape;
     ppLabel39: TppLabel;
     LCurSup: TppLabel;
-    ppShape34: TppShape;
+    SRegDiploma: TppShape;
     LRegDiploma: TppLabel;
     LRegDipl: TppLabel;
-    ppShape35: TppShape;
+    SLivro: TppShape;
     LLivro: TppLabel;
     LNLivro: TppLabel;
-    ppShape36: TppShape;
+    SFolha: TppShape;
     LFolha: TppLabel;
     LNFolha: TppLabel;
     ppShape37: TppShape;
@@ -2859,30 +2859,33 @@ begin
     Then
      Begin
        Invisivel(FRHisPs8,10); // campos referentes a entrada por curso superior que irão aparecer a partir dos ingressantes de outubro de 2025
-       LRegDiploma.Caption:='Mês e Ano';
-       LLivro.Caption:='Data de Conclusão';
-       LFolha.Caption:='Data de Colação';
-       LLocalReg.Caption:='Nome da Instituição';
+       LRegDiploma.Caption:='Nome da Instituição';
+       SRegDiploma.Width:=7.5625;
+       LRegDipl.Width:=7.4896;
+       LRegDipl.Caption:=NULLToSpace(QCurSup['acs_locreg']);
+       LLocalReg.Caption:='Mês e Ano de Ingresso';
        SLocalReg.Left:=0.0729;
-       SLocalReg.Width:=7.5625;
+       SLocalReg.Width:=1.375;
        LLocalReg.Left:=0.1042;
        LLocReg.Left:=0.1146;
-       LLocReg.Width:=7.4896;
+       LLocReg.Width:=1.325;
        vmesing:=NULLToZero(QDadAlu['alu_mesing']);
        If vmesing <> 0
-       Then LRegDipl.Caption:=Mes[vmesing] + '/' + IntToStr(NULLToZero(QDadAlu['alu_anoing']))
-       Else LRegDipl.Caption:='';
-       LNLivro.Caption:='';
-       LNFolha.Caption:='';
-       If QCurSup['acs_conclusao'] <> null
-       Then LNLivro.Caption:=DateToStr(QCurSup['acs_conclusao']);
-       If QCurSup['acs_colacao'] <> null
-       Then LNFolha.Caption:=DateToStr(QCurSup['acs_colacao']);
+       Then LLocReg.Caption:=Mes[vmesing] + '/' + IntToStr(NULLToZero(QDadAlu['alu_anoing']))
+       Else LLocReg.Caption:='';
+       LLivro.Visible:=False;
+       LNLivro.Visible:=False;
+       SLivro.Visible:=False;
+       LFolha.Visible:=False;
+       LNFolha.Visible:=False;
+       SFolha.Visible:=False;
      End
     Else
      Begin
        Visivel(FRHisPs8,10); // campos referentes a entrada por curso superior que não irão aparecer até os ingressantes de julho de 2025
        LRegDiploma.Caption:='Nº Reg. Diploma';
+       SRegDiploma.Width:=1.375;
+       LRegDipl.Width:=1.3125;
        LLivro.Caption:='Nº do Livro';
        LFolha.Caption:='Nº da Folha';
        LLocalReg.Caption:='Local do Registro';
@@ -2898,6 +2901,7 @@ begin
        If QCurSup['acs_datreg'] <> Null
        Then LDatReg.Caption:=DateToStr(QCurSup['acs_datreg'])
        Else LDatReg.Caption:='********';
+       LLocReg.Caption:=NULLToSpace(QCurSup['acs_locreg']);
      End;
 
     ppLine61.Height:=0.9687; // linha lateral direita do quadro de curso superior
@@ -2908,11 +2912,11 @@ begin
     GHBHistor.Height:=3.78;
 
     LCurSup.Caption:=NULLToSpace(QCurSup['acs_cursup']);
-    LLocReg.Caption:=NULLToSpace(QCurSup['acs_locreg']);
     LDatVest.Caption:='**************';
     LPontos.Caption:='***';
     LEntidade.Caption:='*************************';
   End;
+
  If qconsccl['ahb_conclusao'] <> Null
  Then LConclusao.Caption:=DateToStr(qconsccl['ahb_conclusao'])
  Else LConclusao.Caption:='********';

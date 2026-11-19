@@ -3404,10 +3404,10 @@ object FRHist9: TFRHist9
           GroupNo = 0
           LayerName = Foreground5
         end
-        object ppShape34: TppShape
+        object SRegDiploma: TppShape
           Tag = 1
           DesignLayer = ppDesignLayer6
-          UserName = 'Shape34'
+          UserName = 'SRegDiploma'
           mmHeight = 6879
           mmLeft = 1852
           mmTop = 64029
@@ -3459,10 +3459,10 @@ object FRHist9: TFRHist9
           GroupNo = 0
           LayerName = Foreground5
         end
-        object ppShape35: TppShape
+        object SLivro: TppShape
           Tag = 1
           DesignLayer = ppDesignLayer6
-          UserName = 'Shape35'
+          UserName = 'SLivro'
           mmHeight = 6879
           mmLeft = 44458
           mmTop = 64029
@@ -3514,10 +3514,10 @@ object FRHist9: TFRHist9
           GroupNo = 0
           LayerName = Foreground5
         end
-        object ppShape36: TppShape
+        object SFolha: TppShape
           Tag = 1
           DesignLayer = ppDesignLayer6
-          UserName = 'Shape36'
+          UserName = 'SFolha'
           mmHeight = 6879
           mmLeft = 82560
           mmTop = 64029
@@ -3595,7 +3595,7 @@ object FRHist9: TFRHist9
           FormField = False
           Transparent = True
           mmHeight = 2646
-          mmLeft = 113242
+          mmLeft = 113772
           mmTop = 64029
           mmWidth = 15081
           BandType = 3
@@ -3617,9 +3617,9 @@ object FRHist9: TFRHist9
           FormField = False
           Transparent = True
           mmHeight = 3969
-          mmLeft = 113506
+          mmLeft = 114036
           mmTop = 66675
-          mmWidth = 79640
+          mmWidth = 79110
           BandType = 3
           GroupNo = 0
           LayerName = Foreground5
@@ -4659,7 +4659,7 @@ object FRHist9: TFRHist9
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clBlack
           Font.Name = 'Times New Roman'
-          Font.Size = 9
+          Font.Size = 8
           Font.Style = [fsBold]
           FormField = False
           Transparent = True
